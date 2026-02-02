@@ -19,8 +19,8 @@ func main() {
 	if errors.Is(err, os.ErrNotExist) {
 		fmt.Println("Cloning:", url)
 		_, err := git.PlainClone(dst, false, &git.CloneOptions{
-			URL:      url,
-			Depth:    1,
+			URL:   url,
+			Depth: 1,
 		})
 		if err != nil {
 			panic(err)
@@ -33,4 +33,3 @@ func main() {
 	}
 	fmt.Println("Already cloned:", dst)
 }
-
