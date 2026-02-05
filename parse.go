@@ -10,7 +10,7 @@ import (
 )
 
 // ---- Regex für Version / URL in Formula Ruby Files ----
-var reVersion = regexp.MustCompile(`(?m)^\s*version(?:\s*\(\s*)?\s*["']([^"']+)["']`)
+// var reVersion = regexp.MustCompile(`(?m)^\s*version(?:\s*\(\s*)?\s*["']([^"']+)["']`)
 var reURL = regexp.MustCompile(`(?m)^\s*url\s+["']([^"']+)["']`)
 
 // ---- Local Tap: Versions aus Formula Ruby Files laden ----
@@ -44,9 +44,9 @@ func loadFormulaVersions(repoPath string) (map[string]string, error) {
 
 // ---- Version aus Ruby Content extrahieren: version -> url fallback ----
 func extractVersion(content, pkgName string) string {
-	if m := reVersion.FindStringSubmatch(content); len(m) == 2 {
-		return strings.TrimSpace(m[1])
-	}
+	//if m := reVersion.FindStringSubmatch(content); len(m) == 2 {
+	//	return strings.TrimSpace(m[1])
+	//}
 	if m := reURL.FindStringSubmatch(content); len(m) == 2 {
 		return inferVersionFromURL(m[1], pkgName)
 	}
