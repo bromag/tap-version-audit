@@ -26,7 +26,15 @@ func main() {
 	os.Exit(run())
 }
 func run() int {
-	tapURL := "https://bitbucket.bit.admin.ch/scm/tlchmi/homebrew-ch-gov-brew.git"
+	if err := loadDotEnv(".env"); err != nil {
+		panic(err)
+	}
+	fmt.Println("TAP_URL:", os.Getenv("TAP_URL"))
+
+	tapURL := os.Getenv("TAP_URL")
+	if tapURL == "" {
+		panic("TAP_URL environment variable not set")
+	}
 
 	privateTapPath, err := ensureRepoMirror(".cache/private-tap", tapURL)
 	if err != nil {
