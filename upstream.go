@@ -8,6 +8,21 @@ import (
 	"strings"
 )
 
+type kind int
+
+const (
+	kindUnknown kind = iota
+	kindFormula
+	kindCask
+)
+
+type tapEntry struct {
+	name    string
+	Version string
+	Path    string
+	Kind    kind
+}
+
 var upstreamOverrides = map[string]string{
 	"gov-filter-repo":        "git-filter-repo",
 	"gov-md2man":             "go-md2man",
@@ -108,7 +123,7 @@ func fetchUpstreamStable(client *http.Client, formula string) (stable string, ok
 			return "", false, err
 		}
 		defer func() {
-			if cerr := resp.Body.Close(); cerr != nil {
+			if cerr := r2.Body.Close(); cerr != nil {
 				// optional: log.Printf("close resp body: %v", cerr)
 			}
 		}()
